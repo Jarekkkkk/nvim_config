@@ -5,3 +5,12 @@
 --   pattern = "*",
 --   command = "tabdo wincmd =",
 -- }
+
+
+--  change the working directory to match the file
+vim.api.nvim_exec([[
+  augroup AutoCd
+    autocmd!
+    autocmd BufEnter * silent! lcd %:p:h
+  augroup END
+]], false)

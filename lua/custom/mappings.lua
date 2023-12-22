@@ -14,5 +14,17 @@ M.general = {
 }
 
 -- more keybinds!
+M.Toggleterm = {
+  plugin = true,
+  n = {
+    ["<leader>f"] = { "<cmd>ToggleTerm direction=float<cr>", "Float Terminal", opts = { silent = true } },
 
+    ["<leader>h"] = {
+      "<cmd>ToggleTerm direction=horizontal<cr>",
+      "Horizontal Terminal",
+      opts = { silent = true },
+    },
+    ["<leader>v"] = { "<cmd>ToggleTerm direction=vertical<cr>", "Vertical Terminal", opts = { silent = true } },
+  },
+}
 return M

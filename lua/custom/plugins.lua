@@ -62,6 +62,19 @@ local plugins = {
       "nvim-lua/plenary.nvim",
     },
   },
+  {
+    "akinsho/toggleterm.nvim",
+    init = function()
+      require("core.utils").load_mappings "Toggleterm"
+    end,
+    cmd = {
+      "ToggleTerm",
+      "ToggleTermSendCurrentLine",
+      "ToggleTermSendVisualLines",
+      "ToggleTermSendVisualSelection",
+    },
+    opts = require "custom.configs.toggleterm",
+  },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",

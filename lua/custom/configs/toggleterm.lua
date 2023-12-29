@@ -1,9 +1,9 @@
 return {
   size = function(term)
     if term.direction == "horizontal" then
-      return vim.o.lines * 0.3
+      return 15
     elseif term.direction == "vertical" then
-      return vim.o.columns * 0.5
+      return vim.o.columns * 0.35
     end
   end,
   open_mapping = [[<c-\>]],

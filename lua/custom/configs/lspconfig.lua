@@ -33,9 +33,13 @@ lspconfig.solidity.setup {
   single_file_support = true,
 }
 
-
 lspconfig.pyright.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   filetypes = { "python" },
+}
+
+lspconfig.tailwindcss.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
 }

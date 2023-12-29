@@ -31,7 +31,6 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     opts = overrides.treesitter,
   },
-
   -- Install a plugin
   {
     "max397574/better-escape.nvim",
@@ -69,6 +68,17 @@ local plugins = {
       "ToggleTermSendVisualSelection",
     },
     opts = require "custom.configs.toggleterm",
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html" },
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "tact-lang/tact.vim",
+    lazy = false,
   },
   -- To make a plugin not be loaded
   -- {

@@ -39,6 +39,11 @@ M.mason = {
     -- Smart contract
     "solidity",
     "pyright",
+    -- golang
+    "gopls",
+    -- rust
+    "rust-analyzer",
+    "graphql-language-service-cli",
   },
 }
 

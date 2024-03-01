@@ -80,6 +80,34 @@ local plugins = {
     "tact-lang/tact.vim",
     lazy = false,
   },
+  -- {
+  --   "simrat39/rust-tools.nvim",
+  --   lazy = false,
+  --   ft = "rust",
+  --   dependencies = "neovim/nvim-lspconfig",
+  --   opts = function()
+  --     return require "custom.configs.rust-tools"
+  --   end,
+  --   config = function(_, opts)
+  --     require("rust-tools").setup(opts)
+  --   end,
+  -- },
+  -- Golang
+  {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    config = function(_, opts)
+      require("gopher").setup(opts)
+      require("core.utils").load_mappings "gopher"
+    end,
+    build = function()
+      vim.cmd [[silent! GoInstallDeps]]
+    end,
+  },
+  {
+    "rvmelkonian/move.vim",
+    lazy = false,
+  },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",

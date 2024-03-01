@@ -6,7 +6,6 @@ local formatting = null_ls.builtins.formatting
 local lint = null_ls.builtins.diagnostics
 
 local sources = {
-
   formatting.stylua,
   formatting.black,
   lint.shellcheck,
@@ -17,10 +16,16 @@ local sources = {
   --    end,
   --  },
   -- webdev stuff
-  formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+  -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+  formatting.prettier.with { extra_args = { "--double-quote", "--jsx-double-quote" } },
 
   -- Lua
   b.formatting.stylua,
+
+  -- Golanf
+  formatting.gofumpt,
+  formatting.goimports_reviser,
+  formatting.golines,
 }
 
 null_ls.setup {

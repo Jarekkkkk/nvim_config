@@ -40,7 +40,7 @@ M.mason = {
     "solidity",
     "pyright",
     -- golang
-    "gopls",
+    -- "gopls",
     -- rust
     "rust-analyzer",
     "graphql-language-service-cli",

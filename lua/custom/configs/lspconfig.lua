@@ -15,7 +15,7 @@ local util = require "lspconfig/util"
 
 --
 -- lspconfig.pyright.setup { blabla}
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_attach = on_attach,
   filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },

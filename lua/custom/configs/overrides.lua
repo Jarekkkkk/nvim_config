@@ -42,7 +42,7 @@ M.mason = {
     -- golang
     -- "gopls",
     -- rust
-    "rust-analyzer",
+    -- "rust-analyzer",
     "graphql-language-service-cli",
   },
 }

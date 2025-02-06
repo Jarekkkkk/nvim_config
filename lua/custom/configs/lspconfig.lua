@@ -48,7 +48,9 @@ lspconfig.tailwindcss.setup {
 lspconfig.move_analyzer.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  cmd = { os.getenv "HOME" .. "/.cargo/bin/move-analyzer" },
   filetypes = { "move" },
+  root_dir = util.root_pattern("Move.toml", ".git"),
 }
 
 -- lspconfig.gopls.setup {
@@ -78,19 +80,19 @@ lspconfig.graphql.setup {
   },
 }
 -- rust
-lspconfig.rust_analyzer.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { "rust" },
-  root_dir = util.root_pattern "Cargo.toml",
-  settings = {
-    ["rust_analyzer"] = {
-      checkOnSave = {
-        extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
-      },
-      cargo = {
-        allFeatures = true,
-      },
-    },
-  },
-}
+-- lspconfig.rust_analyzer.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { "rust" },
+--   root_dir = util.root_pattern "Cargo.toml",
+--   settings = {
+--     ["rust_analyzer"] = {
+--       checkOnSave = {
+--         extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+--       },
+--       cargo = {
+--         allFeatures = true,
+--       },
+--     },
+--   },
+-- }

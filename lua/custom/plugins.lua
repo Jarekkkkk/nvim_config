@@ -80,18 +80,46 @@ local plugins = {
     "tact-lang/tact.vim",
     lazy = false,
   },
-  -- {
-  --   "simrat39/rust-tools.nvim",
-  --   lazy = false,
-  --   ft = "rust",
-  --   dependencies = "neovim/nvim-lspconfig",
-  --   opts = function()
-  --     return require "custom.configs.rust-tools"
-  --   end,
-  --   config = function(_, opts)
-  --     require("rust-tools").setup(opts)
-  --   end,
-  -- },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    ft = { "rust" },
+    config = function()
+      vim.g.rustaceanvim = {
+        -- Plugin configuration
+        tools = {
+          hover_actions = {
+            auto_focus = true,
+          },
+        },
+        -- LSP configuration
+        server = {
+          on_attach = function(client, bufnr)
+            -- you can also put your keymaps here
+            local map = vim.keymap.set
+            map("n", "<leader>ca", function()
+              vim.cmd.RustLsp "codeAction"
+            end, { buffer = bufnr, desc = "Code Action" })
+            map("n", "<leader>rd", function()
+              vim.cmd.RustLsp "debuggables"
+            end, { buffer = bufnr, desc = "Rust Debuggables" })
+            map("n", "<leader>rr", function()
+              vim.cmd.RustLsp "runnables"
+            end, { buffer = bufnr, desc = "Rust Runnables" })
+            map("n", "<leader>rem", function()
+              vim.cmd.RustLsp "expandMacro"
+            end, { buffer = bufnr, desc = "Expand Macro" })
+            map("n", "<leader>rk", function()
+              vim.cmd.RustLsp "hover actions"
+            end, { buffer = bufnr, desc = "Hover Actions" })
+            map("n", "<leader>rep", function()
+              vim.cmd.RustLsp "explainError"
+            end, { buffer = bufnr, desc = "Explain Error" })
+          end,
+        },
+      }
+    end,
+  },
   -- Golang
   -- {
   --   "olexsmir/gopher.nvim",
@@ -107,7 +135,8 @@ local plugins = {
 
   -- Move
   {
-    "rvmelkonian/move.vim",
+    "yanganto/move.vim",
+    branch = "sui-move",
     lazy = false,
   },
   -- Avante
@@ -118,18 +147,18 @@ local plugins = {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
       -- add any opts here
-      provider = "openai",
-      auto_suggestions_provider = "openai",
-      -- auto_suggestions_provider = "openai", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-      openai = {
-        endpoint = "https://api.deepseek.com/v1",
-        model = "deepseek-chat",
-        timeout = 30000, -- Timeout in milliseconds
-        temperature = 0,
-        max_tokens = 4096,
-        -- optional
-        -- api_key_name = "sk-56812c36424f489b80aaafeadedcb6dc", -- default OPENAI_API_KEY if not set
-      },
+      -- provider = "openai",
+      -- auto_suggestions_provider = "openai",
+      -- -- auto_suggestions_provider = "openai", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+      -- openai = {
+      --   endpoint = "https://api.deepseek.com/v1",
+      --   model = "deepseek-chat",
+      --   timeout = 30000, -- Timeout in milliseconds
+      --   temperature = 0,
+      --   max_tokens = 4096,
+      --   -- optional
+      --   -- api_key_name = "sk-56812c36424f489b80aaafeadedcb6dc", -- default OPENAI_API_KEY if not set
+      -- },
       hints = { enabled = false },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

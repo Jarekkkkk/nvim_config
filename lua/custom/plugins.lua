@@ -113,8 +113,11 @@ local plugins = {
               vim.cmd.RustLsp "hover actions"
             end, { buffer = bufnr, desc = "Hover Actions" })
             map("n", "<leader>rep", function()
-              vim.cmd.RustLsp "explainError"
+              vim.cmd.RustLsp("explainError", "current")
             end, { buffer = bufnr, desc = "Explain Error" })
+            map("n", "<leader>red", function()
+              vim.cmd.RustLsp("renderDiagnostic", "current")
+            end, { buffer = bufnr, desc = "Render Diagnostic" })
           end,
         },
       }

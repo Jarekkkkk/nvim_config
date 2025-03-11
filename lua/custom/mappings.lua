@@ -6,6 +6,34 @@ M.general = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
     ["QQ"] = { "<cmd> qa <CR>", "Quit nvim" },
     ["<C-z>"] = { ":undo <CR>", "Undo" },
+    ["<leader>fm"] = {
+      function()
+        local filetype = vim.bo.filetype
+        if filetype == "move" then
+          -- Save the file first
+          vim.cmd "write"
+
+          -- Get the file path
+          local file = vim.fn.expand "%:p"
+
+          -- Run prettier-move as a job
+          vim.fn.jobstart({ "prettier-move", "-w", file }, {
+            on_exit = function(_, exit_code)
+              if exit_code == 0 then
+                -- Reload the buffer if it was formatted successfully
+                vim.cmd "checktime"
+              else
+                vim.notify("Prettier-move failed", vim.log.levels.ERROR)
+              end
+            end,
+          })
+        else
+          -- For non-Move files, use regular LSP formatting
+          vim.lsp.buf.format { async = true }
+        end
+      end,
+      "Format file",
+    },
   },
   i = { ["<C-z>"] = { "<C-o>u", "Undo" } },
   v = {

@@ -15,12 +15,9 @@ local sources = {
   --      return { "--python-executable", virtual .. "/bin/python3", "--ignore-missing-imports" }
   --    end,
   --  },
-  -- webdev stuff
-  -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
   formatting.prettier.with {
     extra_args = { "--double-quote", "--jsx-double-quote" },
   },
-
   -- Lua
   b.formatting.stylua,
 

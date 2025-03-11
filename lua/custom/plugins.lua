@@ -158,9 +158,9 @@ local plugins = {
       --   model = "deepseek-chat",
       --   timeout = 30000, -- Timeout in milliseconds
       --   temperature = 0,
-      --   max_tokens = 4096,
+      max_tokens = 4096,
       --   -- optional
-      --   -- api_key_name = "sk-56812c36424f489b80aaafeadedcb6dc", -- default OPENAI_API_KEY if not set
+      --   -- api_key_name = "", -- default OPENAI_API_KEY if not set
       -- },
       hints = { enabled = false },
     },
@@ -199,6 +199,9 @@ local plugins = {
         ft = { "markdown", "Avante" },
       },
     },
+  },
+  {
+    "pteroctopus/faster.nvim",
   },
   -- To make a plugin not be loaded
   -- {

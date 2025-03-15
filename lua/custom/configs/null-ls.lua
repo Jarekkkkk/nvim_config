@@ -8,7 +8,6 @@ local lint = null_ls.builtins.diagnostics
 local sources = {
   formatting.stylua,
   formatting.black,
-  lint.shellcheck,
   --  lint.mypy.with {
   --    extra_args = function()
   --      local virtual = os.getenv "VIRTUAL_ENV" or os.getenv "CONDA_DEFAULT_ENV" or "/usr"

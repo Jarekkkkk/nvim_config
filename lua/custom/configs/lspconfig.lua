@@ -44,7 +44,6 @@ lspconfig.tailwindcss.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
-
 -- LSP
 local move_analyzer_id
 lspconfig.move_analyzer.setup {
@@ -57,7 +56,7 @@ lspconfig.move_analyzer.setup {
   filetypes = { "move" },
   root_dir = util.root_pattern("Move.toml", ".git"),
 }
--- fallback for closing move_analyzer
+
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = function()
     if move_analyzer_id then

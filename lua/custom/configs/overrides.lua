@@ -36,6 +36,7 @@ M.mason = {
     "typescript-language-server",
     "prettier",
     "tailwindcss-language-server",
+    "eslint-lsp",
     -- Smart contract
     "solidity",
     "pyright",

@@ -203,6 +203,13 @@ local plugins = {
   {
     "pteroctopus/faster.nvim",
   },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require "custom.configs.lint"
+    end,
+  },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",

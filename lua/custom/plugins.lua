@@ -7,15 +7,6 @@ local plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- format & linting
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require "custom.configs.null-ls"
-        end,
-      },
-    },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
@@ -158,7 +149,7 @@ local plugins = {
       --   model = "deepseek-chat",
       --   timeout = 30000, -- Timeout in milliseconds
       --   temperature = 0,
-      max_tokens = 4096,
+      max_tokens = 10000,
       --   -- optional
       --   -- api_key_name = "", -- default OPENAI_API_KEY if not set
       -- },
@@ -202,6 +193,13 @@ local plugins = {
   },
   {
     "pteroctopus/faster.nvim",
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require "custom.configs.format"
+    end,
   },
   {
     "mfussenegger/nvim-lint",

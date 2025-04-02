@@ -8,6 +8,7 @@ M.general = {
     ["<C-z>"] = { ":undo <CR>", "Undo" },
     ["<leader>fm"] = {
       function()
+        local conform = require "conform"
         local filetype = vim.bo.filetype
         if filetype == "move" then
           -- Save the file first
@@ -28,8 +29,12 @@ M.general = {
             end,
           })
         else
-          -- For non-Move files, use regular LSP formatting
-          vim.lsp.buf.format { async = true }
+          -- For non-Move files, use conform formatter
+          conform.format {
+            lsp_fallback = true,
+            async = false,
+            timeout_ms = 1000,
+          }
         end
       end,
       "Format file",

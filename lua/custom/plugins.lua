@@ -140,7 +140,7 @@ local plugins = {
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
-      mode = "agentic",
+      mode = "legacy",
       -- add any opts here
       provider = "claude",
       -- auto_suggestions_provider = "openai",
@@ -194,6 +194,7 @@ local plugins = {
     "pteroctopus/faster.nvim",
   },
   {
+    -- format
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -201,6 +202,7 @@ local plugins = {
     end,
   },
   {
+    -- lint
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     config = function()

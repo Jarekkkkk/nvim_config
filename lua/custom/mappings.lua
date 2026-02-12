@@ -74,4 +74,77 @@ M.gopher = {
     },
   },
 }
+
+M.opencode = {
+  plugin = true,
+  n = {
+    ["<leader>oa"] = {
+      function()
+        require("opencode").ask("@this: ", { submit = true })
+      end,
+      "Opencode Ask",
+    },
+    ["<leader>ox"] = {
+      function()
+        require("opencode").select()
+      end,
+      "Opencode Select Actions",
+    },
+    ["<leader>oo"] = {
+      function()
+        require("opencode").toggle()
+      end,
+      "Opencode Toggle",
+    },
+    ["<leader>oc"] = {
+      function()
+        require("opencode").command()
+      end,
+      "Opencode Command Palette",
+    },
+    ["<leader>ou"] = {
+      function()
+        require("opencode").command "session.half.page.up"
+      end,
+      "Opencode Scroll Up",
+    },
+    ["<leader>od"] = {
+      function()
+        require("opencode").command "session.half.page.down"
+      end,
+      "Opencode Scroll Down",
+    },
+
+    -- Expr mappings for operators
+    ["<leader>or"] = {
+      function()
+        return require("opencode").operator "@this "
+      end,
+      "Opencode Add Range",
+      opts = { expr = true },
+    },
+    ["<leader>oll"] = {
+      function()
+        return require("opencode").operator "@this " .. "_"
+      end,
+      "Opencode Add Line",
+      opts = { expr = true },
+    },
+  },
+  x = {
+    ["<leader>oa"] = {
+      function()
+        require("opencode").ask("@this: ", { submit = true })
+      end,
+      "Opencode Ask Selection",
+    },
+    ["<leader>or"] = {
+      function()
+        return require("opencode").operator "@this "
+      end,
+      "Opencode Add Range",
+      opts = { expr = true },
+    },
+  },
+}
 return M

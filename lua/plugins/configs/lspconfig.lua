@@ -5,7 +5,6 @@ local M = {}
 local utils = require "core.utils"
 
 -- export on_attach & capabilities for custom lspconfigs
-
 M.on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
@@ -41,10 +40,11 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-require("lspconfig").lua_ls.setup {
-  on_attach = M.on_attach,
+-- NEW 0.11+ API for lua_ls
+vim.lsp.config("lua_ls", {
   capabilities = M.capabilities,
-
+  -- We don't call on_attach here directly;
+  -- your custom config's LspAttach autocmd will handle it globally.
   settings = {
     Lua = {
       diagnostics = {
@@ -62,6 +62,9 @@ require("lspconfig").lua_ls.setup {
       },
     },
   },
-}
+})
+
+-- Enable the server
+vim.lsp.enable "lua_ls"
 
 return M

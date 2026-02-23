@@ -153,7 +153,6 @@ local plugins = {
     end,
   },
   -- Opencode
-  -- Opencode
   {
     "nickjvandyke/opencode.nvim",
     dependencies = {

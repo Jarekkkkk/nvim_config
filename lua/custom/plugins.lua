@@ -154,19 +154,28 @@ local plugins = {
   },
   -- Opencode
   {
-    "nickjvandyke/opencode.nvim",
-    dependencies = {
-      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
-    },
-    init = function()
-      require("core.utils").load_mappings "opencode"
-    end,
+    "sudo-tee/opencode.nvim",
+    lazy = false,
     config = function()
-      vim.g.opencode_opts = {
-        -- Your configuration here
-      }
-      vim.o.autoread = true
+      require "custom.configs.opencode"
     end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          anti_conceal = { enabled = false },
+          file_types = { "markdown", "opencode_output" },
+        },
+        ft = { "markdown", "Avante", "copilot-chat", "opencode_output" },
+      },
+      -- Optional, for file mentions and commands completion, pick only one
+      -- "saghen/blink.cmp",
+      "hrsh7th/nvim-cmp",
+
+      -- Optional, for file mentions picker, pick only one
+      -- "folke/snacks.nvim", -- Already loaded separately with custom picker config
+    },
   },
   -- To make a plugin not be loaded
   -- {

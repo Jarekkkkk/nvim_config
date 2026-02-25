@@ -97,7 +97,7 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ "BufRead" }, {
         group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
         callback = function()
-          vim.fn.jobstart({ "git", "-C", vim.loop.cwd(), "rev-parse" }, {
+          vim.fn.jobstart({ "git", "-C", vim.uv.cwd(), "rev-parse" }, {
             on_exit = function(_, return_code)
               if return_code == 0 then
                 vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
@@ -124,11 +124,11 @@ local default_plugins = {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
     opts = function()
-      return require "plugins.configs.mason"
+      return require("plugins.configs.mason")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "mason")
-      require("mason").setup(opts)
+      require("mason"):setup(opts)
 
       -- custom nvchad cmd to install all mason binaries listed
       vim.api.nvim_create_user_command("MasonInstallAll", function()
@@ -190,7 +190,7 @@ local default_plugins = {
       },
     },
     opts = function()
-      return require "plugins.configs.cmp"
+      return require("plugins.configs.cmp")
     end,
     config = function(_, opts)
       require("cmp").setup(opts)

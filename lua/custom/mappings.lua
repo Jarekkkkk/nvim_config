@@ -74,77 +74,60 @@ M.gopher = {
     },
   },
 }
-
 M.opencode = {
   plugin = true,
   n = {
-    ["<leader>oa"] = {
-      function()
-        require("opencode").ask("@this: ", { submit = true })
-      end,
-      "Opencode Ask",
-    },
-    ["<leader>ox"] = {
-      function()
-        require("opencode").select()
-      end,
-      "Opencode Select Actions",
-    },
-    ["<leader>oo"] = {
+    ["<leader>og"] = {
       function()
         require("opencode").toggle()
       end,
-      "Opencode Toggle",
+      "Toggle OpenCode",
     },
-    ["<leader>oc"] = {
+    ["<leader>oi"] = {
       function()
-        require("opencode").command()
+        require("opencode").open_input()
       end,
-      "Opencode Command Palette",
+      "Open Input",
     },
-    ["<leader>ou"] = {
+    ["<leader>oo"] = {
       function()
-        require("opencode").command "session.half.page.up"
+        require("opencode").open_output()
       end,
-      "Opencode Scroll Up",
+      "Open Output",
+    },
+    ["<leader>os"] = {
+      function()
+        require("opencode").select_session()
+      end,
+      "Select Session",
     },
     ["<leader>od"] = {
       function()
-        require("opencode").command "session.half.page.down"
+        require("opencode").diff_open()
       end,
-      "Opencode Scroll Down",
+      "Open Diff",
     },
-
-    -- Expr mappings for operators
-    ["<leader>or"] = {
+    ["<leader>oc"] = {
       function()
-        return require("opencode").operator "@this "
+        require("opencode").diff_close()
       end,
-      "Opencode Add Range",
-      opts = { expr = true },
-    },
-    ["<leader>oll"] = {
-      function()
-        return require("opencode").operator "@this " .. "_"
-      end,
-      "Opencode Add Line",
-      opts = { expr = true },
+      "Close Diff",
     },
   },
-  x = {
-    ["<leader>oa"] = {
+  v = {
+    ["<leader>oy"] = {
       function()
-        require("opencode").ask("@this: ", { submit = true })
+        require("opencode").add_visual_selection()
       end,
-      "Opencode Ask Selection",
+      "Add Selection to OpenCode",
     },
-    ["<leader>or"] = {
+    ["<leader>o/"] = {
       function()
-        return require("opencode").operator "@this "
+        require("opencode").quick_chat()
       end,
-      "Opencode Add Range",
-      opts = { expr = true },
+      "Quick Chat",
     },
   },
 }
+
 return M

@@ -75,7 +75,7 @@ return {
     "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     opts = function()
-      return require "nvchad.configs.mason"
+      return require "configs.mason"
     end,
   },
 
@@ -83,7 +83,8 @@ return {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
+      -- ? Point to YOUR config instead of NvChad's
+      require("configs.lspconfig").defaults()
     end,
   },
 
@@ -125,7 +126,7 @@ return {
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
-       "https://codeberg.org/FelipeLema/cmp-async-path.git",
+        "https://codeberg.org/FelipeLema/cmp-async-path.git",
       },
     },
     opts = function()

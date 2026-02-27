@@ -5,34 +5,26 @@ M.on_attach = function(_, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
-
   map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
   map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
-
   map("n", "<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, opts "List workspace folders")
-
   map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
-  map("n", "<leader>ra", require "nvchad.lsp.renamer", opts "NvRenamer")
 end
 
 M.on_init = function(client, _)
-  if vim.fn.has "nvim-0.11" ~= 1 then
-    if client.supports_method "textDocument/semanticTokens" then
-      client.server_capabilities.semanticTokensProvider = nil
-    end
-  else
-    if client:supports_method "textDocument/semanticTokens" then
-      client.server_capabilities.semanticTokensProvider = nil
-    end
+  -- disable semantic tokens
+  local method = "textDocument/semanticTokens"
+  local supports = vim.fn.has "nvim-0.11" == 1 and client:supports_method(method) or client.supports_method(method)
+  if supports then
+    client.server_capabilities.semanticTokensProvider = nil
   end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
 M.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
@@ -52,68 +44,95 @@ M.capabilities.textDocument.completion.completionItem = {
 }
 
 M.defaults = function()
-  dofile(vim.g.base46_cache .. "lsp")
-  require("nvchad.lsp").diagnostic_config()
+  local ok, err = pcall(function()
+    dofile(vim.g.base46_cache .. "lsp")
 
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-      M.on_attach(_, args.buf)
-    end,
-  })
+    local nvchad_lsp_ok, nvchad_lsp = pcall(require, "nvchad.lsp")
+    if nvchad_lsp_ok then
+      nvchad_lsp.diagnostic_config()
+    end
 
-  local lua_lsp_settings = {
-    Lua = {
-      runtime = { version = "LuaJIT" },
-      workspace = {
-        library = {
-          vim.fn.expand "$VIMRUNTIME/lua",
-          vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
-          vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
-          "${3rd}/luv/library",
+    -- ? LspAttach autocmd for keymaps
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(args)
+        M.on_attach(nil, args.buf)
+      end,
+    })
+
+    -- ? Global defaults applied to ALL servers
+    vim.lsp.config("*", {
+      capabilities = M.capabilities,
+      on_init = M.on_init,
+    })
+
+    -- lua_ls
+    vim.lsp.config("lua_ls", {
+      settings = {
+        Lua = {
+          runtime = { version = "LuaJIT" },
+          workspace = {
+            library = {
+              vim.fn.expand "$VIMRUNTIME/lua",
+              vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
+              vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+              "${3rd}/luv/library",
+            },
+          },
         },
       },
-    },
-  }
+    })
+    vim.lsp.enable "lua_ls"
 
-  vim.lsp.config("*", { capabilities = M.capabilities, on_init = M.on_init })
-  vim.lsp.config("lua_ls", { settings = lua_lsp_settings })
-  vim.lsp.enable "lua_ls"
+    -- ts_ls
+    vim.lsp.config("ts_ls", {
+      filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
+      cmd = { "typescript-language-server", "--stdio" },
+      root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+      init_options = {
+        preferences = { disableSuggestions = true },
+      },
+    })
+    vim.lsp.enable "ts_ls"
 
-  vim.lsp.config("ts_ls", {
-    capabilities = M.capabilities,
-    filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
-    cmd = { "typescript-language-server", "--stdio" },
-    init_options = {
-      preferences = { disableSuggestions = true },
-    },
-  })
-  vim.lsp.enable "ts_ls"
+    -- tailwindcss
+    vim.lsp.config("tailwindcss", {
+      root_markers = {
+        "tailwind.config.js",
+        "tailwind.config.ts",
+        "postcss.config.js",
+        "package.json",
+        ".git",
+      },
+    })
+    vim.lsp.enable "tailwindcss"
 
-  vim.lsp.config("tailwindcss", { capabilities = M.capabilities })
-  vim.lsp.enable "tailwindcss"
+    -- graphql
+    vim.lsp.config("graphql", {
+      filetypes = { "javascript", "typescript", "typescriptreact", "graphql" },
+      root_markers = { ".graphqlconfig", ".graphqlrc", "package.json" },
+    })
+    vim.lsp.enable "graphql"
 
-  vim.lsp.config("move-analyzer", {
-    capabilities = M.capabilities,
-    cmd = { "move-analyzer" },
-    filetypes = { "move" },
-    root_markers = { "Move.toml", ".git" },
-  })
-  vim.lsp.enable "move-analyzer"
+    -- typos_lsp
+    vim.lsp.config("typos_lsp", {
+      root_markers = { ".git" },
+      cmd_env = { RUST_LOG = "error" },
+      init_options = { diagnosticSeverity = "Error" },
+    })
+    vim.lsp.enable "typos_lsp"
 
-  vim.lsp.config("graphql", {
-    capabilities = M.capabilities,
-    filetypes = { "javascript", "typescript", "typescriptreact", "graphql" },
-    root_dir = require("lspconfig").util.root_pattern(".graphqlconfig", ".graphqlrc", "package.json"),
-    flags = { debounce_text_changes = 150 },
-  })
-  vim.lsp.enable "graphql"
+    -- move-analyzer
+    vim.lsp.config("move-analyzer", {
+      cmd = { "move-analyzer" },
+      filetypes = { "move" },
+      root_markers = { "Move.toml", ".git" },
+    })
+    vim.lsp.enable "move-analyzer"
+  end)
 
-  vim.lsp.config("typos_lsp", {
-    capabilities = M.capabilities,
-    cmd_env = { RUST_LOG = "error" },
-    init_options = { diagnosticSeverity = "Error" },
-  })
-  vim.lsp.enable "typos_lsp"
+  if not ok then
+    vim.notify("lspconfig error: " .. tostring(err), vim.log.levels.ERROR)
+  end
 end
 
 return M

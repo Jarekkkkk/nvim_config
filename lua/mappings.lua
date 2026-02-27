@@ -28,7 +28,7 @@ map({ "n", "x" }, "<leader>fm", function()
 end, { desc = "general format file" })
 
 -- global lsp mappings
-map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
+map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
 
 -- tabufline
 if require("nvconfig").ui.tabufline.enabled then

@@ -12,7 +12,10 @@ M.on_attach = function(_, bufnr)
   map("n", "<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, opts "List workspace folders")
-  map("n", "<leader>D", vim.lsp.buf.type_definition, opts "Go to type definition")
+  map("n", "<leader>ca", vim.lsp.buf.code_action, opts "Code Action")
+  map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+  map("n", "K", vim.lsp.buf.hover, opts "Hover")
+  map("n", "<leader>cr", vim.lsp.buf.rename, opts "Rename")
 end
 
 M.on_init = function(client, _)

@@ -39,7 +39,7 @@ return {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = function()
-      return require "nvchad.configs.nvimtree"
+      return require "configs.nvimtree"
     end,
   },
 
@@ -66,7 +66,7 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "User FilePost",
     opts = function()
-      return require "nvchad.configs.gitsigns"
+      return require "configs.gitsigns"
     end,
   },
 
@@ -100,7 +100,7 @@ return {
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           require("luasnip").config.set_config(opts)
-          require "nvchad.configs.luasnip"
+          require "configs.luasnip"
         end,
       },
 
@@ -130,7 +130,7 @@ return {
       },
     },
     opts = function()
-      return require "nvchad.configs.cmp"
+      return require "configs.cmp"
     end,
   },
 
@@ -139,7 +139,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
     opts = function()
-      return require "nvchad.configs.telescope"
+      return require "configs.telescope"
     end,
   },
 
@@ -149,7 +149,7 @@ return {
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate | TSInstallAll",
     opts = function()
-      return require "nvchad.configs.treesitter"
+      return require "configs.treesitter"
     end,
   },
 

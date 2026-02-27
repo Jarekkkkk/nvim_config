@@ -1,66 +1,14 @@
-local M = {}
+dofile(vim.g.base46_cache .. "nvimtree")
 
-M.treesitter = {
-  ensure_installed = {
-    "vim",
-    "lua",
-    "html",
-    "css",
-    "javascript",
-    "typescript",
-    "tsx",
-    "markdown",
-    "markdown_inline",
-    -- smart contract
-    "solidity",
-
-    "python",
-  },
-  indent = {
-    enable = true,
-    disable = {
-      "python",
-    },
-  },
-}
-
-M.mason = {
-  ensure_installed = {
-    -- lua stuff
-    "lua-language-server",
-    "stylua",
-
-    -- web dev stuff
-    "css-lsp",
-    "html-lsp",
-    "typescript-language-server",
-    "prettier",
-    "tailwindcss-language-server",
-    "eslint-lsp",
-    -- Smart contract
-    "solidity",
-    "pyright",
-    -- golang
-    -- "gopls",
-    -- rust
-    "rust-analyzer",
-    "graphql-language-service-cli",
-  },
-}
-
--- git support in nvimtree
-M.nvimtree = {
+return {
   filters = {
     dotfiles = false,
-    exclude = { vim.fn.stdpath "config" .. "/lua/custom" },
   },
   disable_netrw = true,
-  hijack_netrw = true,
   hijack_cursor = true,
   hijack_unnamed_buffer_when_opening = false,
   sync_root_with_cwd = true,
   respect_buf_cwd = true,
-  -- Update the focused file on `BufEnter
   update_focused_file = {
     enable = true,
     update_cwd = true,
@@ -126,5 +74,3 @@ M.nvimtree = {
     },
   },
 }
-
-return M

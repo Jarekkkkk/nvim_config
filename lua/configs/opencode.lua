@@ -18,7 +18,7 @@ require("opencode").setup {
   keymap = {
     input_window = {
       ["<esc>"] = false,
-      ["<C-a>"] = { "switch_mode" }, -- Switch between modes (build/plan)
+      ["<C-a>"] = { "switch_mode" },
     },
     output_window = {
       ["<esc>"] = false,

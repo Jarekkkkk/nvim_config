@@ -26,34 +26,34 @@ vim.lsp.config("ts_ls", {
 vim.lsp.enable "ts_ls"
 
 -- Solidity
-vim.lsp.config("solidity", {
-  capabilities = capabilities,
-  cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-  filetypes = { "solidity" },
-  root_dir = lspconfig.util.root_pattern "foundry.toml",
-  single_file_support = true,
-})
-vim.lsp.enable "solidity"
+-- vim.lsp.config("solidity", {
+--   capabilities = capabilities,
+--   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+--   filetypes = { "solidity" },
+--   root_dir = lspconfig.util.root_pattern "foundry.toml",
+--   single_file_support = true,
+-- })
+-- vim.lsp.enable "solidity"
 
 -- Pyright
-vim.lsp.config("pyright", {
-  capabilities = capabilities,
-  filetypes = { "python" },
-})
-vim.lsp.enable "pyright"
+-- vim.lsp.config("pyright", {
+--   capabilities = capabilities,
+--   filetypes = { "python" },
+-- })
+-- vim.lsp.enable "pyright"
 
 -- Tailwind
 vim.lsp.config("tailwindcss", { capabilities = capabilities })
 vim.lsp.enable "tailwindcss"
 
 -- Move Analyzer
-vim.lsp.config("move_analyzer", {
+vim.lsp.config("move-analyzer", {
   capabilities = capabilities,
-  cmd = { os.getenv "HOME" .. "/.cargo/bin/move-analyzer" },
+  cmd = { "move-analyzer" }, -- Changed to sui-move-analyzer
   filetypes = { "move" },
-  root_dir = lspconfig.util.root_pattern("Move.toml", ".git"),
+  root_markers = { "Move.toml", ".git" }, -- Use root_markers for the new API
 })
-vim.lsp.enable "move_analyzer"
+vim.lsp.enable "move-analyzer"
 
 -- GraphQL
 vim.lsp.config("graphql", {
